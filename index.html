@@ -312,52 +312,99 @@ main { max-width:1020px; margin:0 auto; padding:52px 24px 160px; }
 
 
 /* ══════════════════════════════
-   BEBIDAS — con cantidad
+   BEBIDAS
 ══════════════════════════════ */
-.bebida-card {
-  background: linear-gradient(135deg, #0D0D0D, #1C0505);
-  border-radius:18px; padding:20px 24px;
-  display:flex; align-items:center; gap:18px;
-  border:1.5px solid rgba(215,25,32,0.25);
-  box-shadow:0 6px 28px rgba(0,0,0,0.2);
-  max-width:420px;
-}
-.bebida-icon {
-  width:52px; height:52px; border-radius:14px;
-  background:rgba(215,25,32,0.15); display:flex; align-items:center;
-  justify-content:center; flex-shrink:0;
-}
-.bebida-icon svg { width:28px; height:28px; fill:rgba(255,255,255,0.8); }
-.bebida-info { flex:1; }
-.bebida-name { font-family:'Playfair Display',serif; font-size:20px; font-weight:800; color:white; }
-.bebida-sub  { font-size:10px; color:rgba(255,255,255,0.4); letter-spacing:2px; text-transform:uppercase; font-weight:600; margin-top:1px; }
-.bebida-price{ font-family:'Oswald',sans-serif; font-size:32px; font-weight:700; color:var(--gold); letter-spacing:-0.5px; }
 
-/* Bebida qty controls */
-.bebida-controls {
-  display:flex; flex-direction:column; align-items:center; gap:6px;
+/* ── Bebida card — mismo sistema que pizza cards ── */
+.bebida-card {
+  background: var(--white);
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1.5px solid var(--gray-200);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  max-width: 340px;
+  display: flex; flex-direction: column;
+  transition: transform 0.3s cubic-bezier(.34,1.36,.64,1), box-shadow 0.3s;
 }
-.bev-qty-row { display:flex; align-items:center; gap:10px; }
+.bebida-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.13);
+  border-color: rgba(215,25,32,0.2);
+}
+
+.bebida-header {
+  background: linear-gradient(135deg, #8B0000, #C8102E);
+  padding: 18px 20px 16px;
+  display: flex; align-items: center; gap: 13px;
+  position: relative; overflow: hidden;
+}
+.bebida-header::before {
+  content:''; position:absolute; inset:0;
+  background: repeating-linear-gradient(-45deg,transparent,transparent 8px,rgba(255,255,255,0.04) 8px,rgba(255,255,255,0.04) 16px);
+}
+.bebida-header::after {
+  content:''; position:absolute; top:-30px; right:-30px;
+  width:100px; height:100px; border-radius:50%;
+  background:rgba(255,255,255,0.08);
+}
+.bebida-icon-circle {
+  width:46px; height:46px; border-radius:13px;
+  background:rgba(255,255,255,0.18);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; position:relative; z-index:1;
+}
+.bebida-icon-circle svg { width:24px; height:24px; fill:white; }
+.bebida-header-info { flex:1; position:relative; z-index:1; }
+.bebida-badge { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:2px; }
+.bebida-name { font-family:'Playfair Display',serif; font-size:20px; font-weight:800; color:white; line-height:1.1; }
+
+/* Body */
+.bebida-body { padding:14px 20px 16px; flex:1; }
+
+/* Price + qty row */
+.bebida-price-row {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:14px;
+}
+.bebida-price-block {}
+.bebida-volume { font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gray-400); margin-bottom:2px; }
+.bebida-price {
+  font-family:'Oswald',sans-serif; font-size:38px; font-weight:700;
+  color:var(--red); line-height:1; letter-spacing:-1px;
+}
+
+/* Qty stepper — same pill style as size buttons */
+.bev-qty-row {
+  display:flex; align-items:center; gap:0;
+  background:var(--gray-100); border:1.5px solid var(--gray-200);
+  border-radius:12px; overflow:hidden;
+}
 .bev-qty-btn {
-  width:32px; height:32px; border-radius:50%;
-  background:rgba(255,255,255,0.1); border:1.5px solid rgba(255,255,255,0.2);
-  color:white; font-size:18px; font-weight:700;
+  width:38px; height:40px;
+  background:transparent; border:none;
+  color:var(--dark); font-size:20px; font-weight:700;
   cursor:pointer; display:flex; align-items:center; justify-content:center;
-  transition:all 0.15s; line-height:1;
+  transition:background 0.15s, color 0.15s; line-height:1;
 }
-.bev-qty-btn:hover { background:var(--red); border-color:var(--red); }
+.bev-qty-btn:hover { background:var(--red); color:white; }
 .bev-qty-num {
-  font-family:'Oswald',sans-serif; font-size:22px;
-  font-weight:700; color:white; min-width:24px; text-align:center; letter-spacing:-0.3px;
+  font-family:'Oswald',sans-serif; font-size:18px;
+  font-weight:700; color:var(--dark); min-width:32px; text-align:center;
+  border-left:1.5px solid var(--gray-200); border-right:1.5px solid var(--gray-200);
+  padding: 0 4px; line-height:40px;
 }
+
+/* Add button — same as pizza add-btn */
 .bev-add-btn {
-  background:var(--red); color:white; border:none;
-  border-radius:8px; padding:7px 16px; cursor:pointer;
-  font-family:'Poppins',sans-serif; font-size:10px;
-  font-weight:700; letter-spacing:2px; text-transform:uppercase;
-  transition:all 0.2s; white-space:nowrap;
+  width:100%; padding:11px; border-radius:10px;
+  background:var(--dark); color:white; border:none;
+  cursor:pointer; font-family:'Poppins',sans-serif;
+  font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  transition:background 0.2s, transform 0.15s, box-shadow 0.2s;
 }
-.bev-add-btn:hover { background:var(--red-dark); transform:scale(1.03); }
+.bev-add-btn:hover { background:var(--red); box-shadow:0 6px 20px rgba(215,25,32,0.3); transform:scale(1.01); }
+.bev-add-btn svg { width:15px; height:15px; fill:white; }
 
 /* ══════════════════════════════
    FLOATING CART FAB
@@ -602,7 +649,7 @@ footer {
   .cart-drawer { max-height: 85vh; }
   .cart-total-amount { font-size: 30px; }
 
-  .bebida-card { flex-wrap: wrap; gap: 14px; }
+
 }
 
 /* ═══════════════════════════════════════
@@ -652,19 +699,14 @@ footer {
   .section-icon svg { width: 17px; height: 17px; }
 
   /* Bebida */
-  .bebida-card {
-    flex-wrap: wrap;
-    padding: 16px 18px;
-    gap: 12px;
-    max-width: 100%;
-  }
+  .bebida-card { max-width: 100%; }
   .bebida-name  { font-size: 18px; }
-  .bebida-price { font-size: 28px; }
-  .bebida-icon  { width: 44px; height: 44px; }
-  .bebida-controls { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
-  .bev-qty-row { gap: 12px; }
+  .bebida-price { font-size: 32px; }
+  .bev-qty-btn  { width: 34px; height: 38px; font-size: 18px; }
+  .bev-qty-num  { min-width: 28px; line-height: 38px; font-size: 17px; }
+  .bev-qty-row { gap: 10px; }
   .bev-qty-num { font-size: 20px; }
-  .bev-add-btn { padding: 8px 20px; font-size: 10px; }
+  .bev-add-btn { font-size: 11px; padding: 11px; }
 
   /* FAB carrito */
   .cart-fab { width: 56px; height: 56px; bottom: 20px; right: 18px; }
@@ -781,7 +823,7 @@ footer {
     </div>
 
     <!-- ── 4 Estaciones ── -->
-    <div class="pizza-card" data-name="4 Estaciones" data-price-familiar="25" data-price-mediana="15">
+    <div class="pizza-card" data-name="4 Estaciones" data-price-familiar="22" data-price-mediana="12">
       <div class="card-header ch-clasica">
         <div class="card-icon-circle">
           <svg viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"/></svg>
@@ -818,8 +860,8 @@ footer {
           <div class="ce-item" data-name="Carne" data-price="0">Carne</div>
         </div>
         <div class="size-selector">
-          <div class="size-btn active" data-size="Familiar" data-price="25"><span class="size-label">Familiar</span><span class="size-price">$25</span></div>
-          <div class="size-btn" data-size="Mediana" data-price="15"><span class="size-label">Mediana</span><span class="size-price">$15</span></div>
+          <div class="size-btn active" data-size="Familiar" data-price="22"><span class="size-label">Familiar</span><span class="size-price">$22</span></div>
+          <div class="size-btn" data-size="Mediana" data-price="12"><span class="size-label">Mediana</span><span class="size-price">$12</span></div>
         </div>
         <button class="add-btn"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Agregar al pedido</button>
       </div>
@@ -877,7 +919,7 @@ footer {
     </div>
 
     <!-- ── Vegetariana ── -->
-    <div class="pizza-card" data-name="Vegetariana" data-price-familiar="25" data-price-mediana="15">
+    <div class="pizza-card" data-name="Vegetariana" data-price-familiar="20" data-price-mediana="12">
       <div class="card-header ch-nueva">
         <div class="card-icon-circle">
           <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 19.82L5.71 21l1-2.3A4.49 4.49 0 008 19c8 0 10-8 10-8s-1 0-1 1c0 0-1-5-4-5 0 0 2 0 2 2 0 0-2-1-3 0 0 0 2-1 2 1 0 0-2-1-3 1 0 0 1-1 1-2 0 0-2 0-1 4 0 0-3-4-2-8z"/></svg>
@@ -922,8 +964,8 @@ footer {
         </div>
 
         <div class="size-selector">
-          <div class="size-btn active" data-size="Familiar" data-price="25"><span class="size-label">Familiar</span><span class="size-price">$25</span></div>
-          <div class="size-btn" data-size="Mediana" data-price="15"><span class="size-label">Mediana</span><span class="size-price">$15</span></div>
+          <div class="size-btn active" data-size="Familiar" data-price="20"><span class="size-label">Familiar</span><span class="size-price">$20</span></div>
+          <div class="size-btn" data-size="Mediana" data-price="12"><span class="size-label">Mediana</span><span class="size-price">$12</span></div>
         </div>
         <button class="add-btn"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Agregar al pedido</button>
       </div>
@@ -998,7 +1040,7 @@ footer {
         <ul class="ingredients">
           <li>Salsa napolitana de la casa</li>
           <li>Pollo y carne</li>
-          <li>Cebolla caramelizada</li>
+          <li>Cebolla</li>
         </ul>
         <!-- Adicionales opcionales -->
         <div class="card-extras-toggle" onclick="toggleExtras('bbq-extras', this)">
@@ -1035,7 +1077,7 @@ footer {
     </div>
 
     <!-- ── Maracucha ── -->
-    <div class="pizza-card" data-name="Maracucha" data-price-familiar="25" data-price-mediana="15">
+    <div class="pizza-card" data-name="Maracucha" data-price-familiar="22" data-price-mediana="12">
       <div class="card-header ch-bbq">
         <div class="card-icon-circle">
           <svg viewBox="0 0 24 24"><path d="M18.06 22.99h1.66c.84 0 1.53-.64 1.63-1.46L23 5.05h-5V1h-1.97v4.05h-4.97l.3 2.34c1.71.47 3.31 1.32 4.27 2.26 1.44 1.42 2.43 2.89 2.43 5.29v8.05zM1 21.99V21h15.03v.99c0 .55-.45 1-1.01 1H2.01c-.56 0-1.01-.45-1.01-1zm15.03-7c0-8-15.03-8-15.03 0h15.03z"/></svg>
@@ -1047,9 +1089,9 @@ footer {
       </div>
       <div class="card-body">
         <ul class="ingredients">
-          <li>Salsa BBQ</li>
-          <li>Pollo y carne de puerco</li>
-          <li>Tocineta</li>
+          <li>Salsa napolitana de la casa</li>
+          <li>Queso mozzarella</li>
+          <li>Tocineta · Plátano</li>
         </ul>
         <!-- Adicionales opcionales -->
         <div class="card-extras-toggle" onclick="toggleExtras('maracucha-extras', this)">
@@ -1078,8 +1120,8 @@ footer {
         </div>
 
         <div class="size-selector">
-          <div class="size-btn active" data-size="Familiar" data-price="25"><span class="size-label">Familiar</span><span class="size-price">$25</span></div>
-          <div class="size-btn" data-size="Mediana" data-price="15"><span class="size-label">Mediana</span><span class="size-price">$15</span></div>
+          <div class="size-btn active" data-size="Familiar" data-price="22"><span class="size-label">Familiar</span><span class="size-price">$22</span></div>
+          <div class="size-btn" data-size="Mediana" data-price="12"><span class="size-label">Mediana</span><span class="size-price">$12</span></div>
         </div>
         <button class="add-btn"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Agregar al pedido</button>
       </div>
@@ -1189,57 +1231,6 @@ footer {
       </div>
     </div>
 
-    <!-- ── Pesto y Maíz ── -->
-    <div class="pizza-card" data-name="Pesto y Maíz" data-price-familiar="23" data-price-mediana="15">
-      <div class="card-header ch-pesto">
-        <div class="card-icon-circle">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-        </div>
-        <div class="card-header-info">
-          <div class="card-badge">Especialidad</div>
-          <h2 class="pizza-name">Pesto y Maíz</h2>
-        </div>
-      </div>
-      <div class="card-body">
-        <ul class="ingredients">
-          <li>Salsa pesto</li>
-          <li>Maíz dulce</li>
-          <li>Queso mozzarella</li>
-        </ul>
-        <div class="size-selector">
-          <div class="size-btn active" data-size="Familiar" data-price="23">
-        <!-- Adicionales opcionales -->
-        <div class="card-extras-toggle" onclick="toggleExtras('pestomaiz-extras', this)">
-          <svg viewBox="0 0 24 24" width="13" height="13"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/></svg>
-          Agregar ingredientes extra <span class="extras-cost-note">(+$2 c/u)</span>
-        </div>
-        <div class="card-extras-panel" id="pestomaiz-extras">
-          <div class="card-extras-grid">
-            <div class="ce-item" data-name="Jamón" data-price="2">Jamón</div>
-            <div class="ce-item" data-name="Tocineta" data-price="2">Tocineta</div>
-            <div class="ce-item" data-name="Pepperoni" data-price="2">Pepperoni</div>
-            <div class="ce-item" data-name="Maíz" data-price="2">Maíz</div>
-            <div class="ce-item" data-name="Champiñones" data-price="2">Champiñones</div>
-            <div class="ce-item" data-name="Aceitunas" data-price="2">Aceitunas</div>
-            <div class="ce-item" data-name="Plátano" data-price="2">Plátano</div>
-            <div class="ce-item" data-name="Cebolla" data-price="2">Cebolla</div>
-            <div class="ce-item" data-name="Jalapeño" data-price="2">Jalapeño</div>
-            <div class="ce-item" data-name="Q. crema" data-price="2">Q. crema</div>
-            <div class="ce-item" data-name="Q. azul" data-price="2">Q. azul</div>
-            <div class="ce-item" data-name="Q. parmesano" data-price="2">Q. parmesano</div>
-            <div class="ce-item" data-name="Pesto" data-price="2">Pesto</div>
-            <div class="ce-item" data-name="Pollo" data-price="3">Pollo <span style="opacity:.6;font-size:10px">$3</span></div>
-            <div class="ce-item" data-name="Carne" data-price="3">Carne <span style="opacity:.6;font-size:10px">$3</span></div>
-          </div>
-          <div class="ce-selected-note" id="pestomaiz-note"></div>
-        </div>
-<span class="size-label">Familiar</span><span class="size-price">$23</span></div>
-          <div class="size-btn" data-size="Mediana" data-price="15"><span class="size-label">Mediana</span><span class="size-price">$15</span></div>
-        </div>
-        <button class="add-btn"><svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>Agregar al pedido</button>
-      </div>
-    </div>
-
     <!-- ── Chicago Pizza ── -->
     <div class="pizza-card" data-name="Chicago Pizza" data-price-grande="25" data-price-pequena="15">
       <div class="card-header ch-chicago">
@@ -1305,21 +1296,32 @@ footer {
     </div>
 
     <div class="bebida-card">
-      <div class="bebida-icon">
-        <svg viewBox="0 0 24 24"><path d="M3 2l2.01 18.23C5.13 21.23 5.97 22 7 22h10c1.03 0 1.87-.77 1.99-1.77L21 2H3zm9 17c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm6.33-11H5.67l-.44-4h12.54l-.44 4z" fill="rgba(255,255,255,0.8)"/></svg>
-      </div>
-      <div class="bebida-info">
-        <div class="bebida-name">Coca-Cola</div>
-        <div class="bebida-sub">2 litros</div>
-      </div>
-      <div class="bebida-price">$5</div>
-      <div class="bebida-controls">
-        <div class="bev-qty-row">
-          <button class="bev-qty-btn" id="bev-minus">−</button>
-          <span class="bev-qty-num" id="bev-qty">0</span>
-          <button class="bev-qty-btn" id="bev-plus">+</button>
+      <div class="bebida-header">
+        <div class="bebida-icon-circle">
+          <!-- Botella Coca-Cola -->
+          <svg viewBox="0 0 24 24"><path d="M7.5 2h9l.5 2H7l.5-2zM6 5h12l.5 1.5c.3.8.5 1.7.5 2.5v10a3 3 0 01-3 3H8a3 3 0 01-3-3V9c0-.8.2-1.7.5-2.5L6 5zm2 5v2h8v-2H8zm0 4v2h5v-2H8z" fill="white"/></svg>
         </div>
-        <button class="bev-add-btn" id="bev-add-btn">Agregar</button>
+        <div class="bebida-header-info">
+          <div class="bebida-badge">Bebida</div>
+          <div class="bebida-name">Coca-Cola</div>
+        </div>
+      </div>
+      <div class="bebida-body">
+        <div class="bebida-price-row">
+          <div class="bebida-price-block">
+            <div class="bebida-volume">2 Litros</div>
+            <div class="bebida-price">$5</div>
+          </div>
+          <div class="bev-qty-row">
+            <button class="bev-qty-btn" id="bev-minus">−</button>
+            <span class="bev-qty-num" id="bev-qty">0</span>
+            <button class="bev-qty-btn" id="bev-plus">+</button>
+          </div>
+        </div>
+        <button class="bev-add-btn" id="bev-add-btn">
+          <svg viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          Agregar al pedido
+        </button>
       </div>
     </div>
   </div>
